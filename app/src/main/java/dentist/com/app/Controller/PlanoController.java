@@ -24,12 +24,12 @@ import dentist.com.app.Services.PlanoService;
 public class PlanoController {
     @Autowired
     private PlanoService planoService;
-    @GetMapping
     
-public List<Planos> listarPlanos() {
-        
-return planoService.listarPlanos();
-}
+    @GetMapping
+        public List<Planos> listarPlanos() {
+                
+        return planoService.listarPlanos();
+        }
 
    
 
