@@ -18,62 +18,56 @@ import org.springframework.web.bind.annotation.RestController;
 import dentist.com.app.Entities.Planos;
 import dentist.com.app.Services.PlanoService;
 
-
 @RestController
 @RequestMapping("/api/plano")
 public class PlanoController {
+
     @Autowired
     private PlanoService planoService;
-    
+
     @GetMapping
-        public List<Planos> listarPlanos() {
-                
+    public List<Planos> listarPlanos() {
+
         return planoService.listarPlanos();
-        }
-
-   
-
-    
-// Buscar plano por ID
-    @GetMapping("/{id}")
-public ResponseEntity<Planos> buscarPlano(@PathVariable Integer id) {
-        Optional<Planos> plano = planoService.buscarPlanoPorId(id);
-        
-return plano.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-}
-
-// Criar um novo plano
-@PostMapping
-public ResponseEntity<Planos> criarPlano(@RequestBody Planos plano) { 
-Planos novoPlano = planoService.criarPlano(plano);
-        
-      
-return ResponseEntity.status(HttpStatus.CREATED).body(novoPlano);
     }
 
+// Buscar plano por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Planos> buscarPlano(@PathVariable Integer id) {
+        Optional<Planos> plano = planoService.buscarPlanoPorId(id);
+
+        return plano.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+// Criar um novo plano
+    @PostMapping
+    public ResponseEntity<Planos> criarPlano(@RequestBody Planos plano) {
+        Planos novoPlano = planoService.criarPlano(plano);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoPlano);
+    }
 
 // Atualizar plano existente
-@PutMapping("/{id}")
-public ResponseEntity<Planos> atualizarPlano(@PathVariable Integer id, @RequestBody Planos plano) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Planos> atualizarPlano(@PathVariable Integer id, @RequestBody Planos plano) {
         Optional<Planos> planoExistente = planoService.buscarPlanoPorId(id);
-if (planoExistente.isPresent()) {              
-Planos planoAtualizado = planoService.atualizarPlano(id, plano);      
-return ResponseEntity.ok(planoAtualizado);
-        } 
-else {
-return ResponseEntity.notFound().build();
+        if (planoExistente.isPresent()) {
+            Planos planoAtualizado = planoService.atualizarPlano(id, plano);
+            return ResponseEntity.ok(planoAtualizado);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 // Deletar plano
+
     @DeleteMapping("/{id}")
-public ResponseEntity<Void> deletarPlano(@PathVariable Integer id) {
-        Optional<Planos> planoExistente = planoService.buscarPlanoPorId(id);       
-if (planoExistente.isPresent()) {
+    public ResponseEntity<Void> deletarPlano(@PathVariable Integer id) {
+        Optional<Planos> planoExistente = planoService.buscarPlanoPorId(id);
+        if (planoExistente.isPresent()) {
             planoService.deletarPlano(id);
-return ResponseEntity.noContent().build();
-        } 
-else {
-      return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-}
+    }
 }

@@ -10,11 +10,12 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
-@Table(name="planos")
+@Entity
+@Table(name = "planos")
 public class Planos {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ManyToOne
@@ -24,7 +25,7 @@ public class Planos {
     @Column(name = "descricao", length = 50, nullable = false)
     private String descricao;
     @Column(name = "valormensal", length = 50, nullable = false)
-    private int  valormensal;
+    private int valormensal;
     @Column(name = "valoranual", length = 50, nullable = false)
     private int valoranual;
 }

@@ -10,6 +10,7 @@ import dentist.com.app.Repository.PlanoRepository;
 
 @Service
 public class PlanoService {
+
     private PlanoRepository planoRepository;
 
     public List<Planos> listarPlanos() {
@@ -25,7 +26,7 @@ public class PlanoService {
     }
 
     public Planos atualizarPlano(Integer id, Planos plano) {
-        plano.setId(id); 
+        plano.setId(id);
         return planoRepository.save(plano);
     }
 
