@@ -29,12 +29,13 @@ public class Planos {
 
     public Planos (){}
 
-    public Planos(String descricao, int id, String status, int valoranual, int valormensal) {
-        this.descricao = descricao;
+    public Planos(int id, String status, String descricao, int valormensal, int valoranual) {
         this.id = id;
         this.status = status;
-        this.valoranual = valoranual;
+        this.descricao = descricao;
         this.valormensal = valormensal;
+        this.valoranual = valoranual;
+
     }    
 
     public int getId() {

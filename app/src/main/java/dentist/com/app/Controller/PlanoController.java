@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +19,16 @@ import dentist.com.app.Entities.Planos;
 import dentist.com.app.Services.PlanoService;
 
 @RestController
-@RequestMapping("/api/plano")
+@RequestMapping("/plano")
 public class PlanoController {
 
     @Autowired
-    private PlanoService planoService;
+    private final PlanoService planoService;
 
     @GetMapping
-    public List<Planos> listarPlanos() {
-
-        return planoService.listarPlanos();
+    public ResponseEntity<List<Planos>> listarPlanos() {
+        List<Planos> plano = planoService.listarPlanos();
+        return ResponseEntity.ok().body(plano);
     }
 
 // Buscar plano por ID
@@ -42,22 +43,16 @@ public class PlanoController {
         this.planoService = planoService;
     }
 
+// Criar um novo plano
     @PostMapping
-    public ResponseEntity<String> cadastrarPlano(@RequestBody Planos plano) {
-        try {
-            planoService.cadastrarPlano(plano);
-            return ResponseEntity.ok("Plano cadastrado com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erro ao cadastrar plano: " + e.getMessage());
+    public ResponseEntity<Planos> criarPlano(@RequestBody Planos plano) {
+        Planos novoPlano = planoService.criar(plano);
+        if(novoPlano != null){
+            return new ResponseEntity<>(novoPlano, HttpStatus.CREATED);
+        }else{
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-// Criar um novo plano
-    /*@PostMapping
-    public ResponseEntity<Planos> criarPlano(@RequestBody Planos plano) {
-        Planos novoPlano = planoService.criarPlano(plano);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoPlano);
-    }*/
 
 // Atualizar plano existente
     @PutMapping("/{id}")
