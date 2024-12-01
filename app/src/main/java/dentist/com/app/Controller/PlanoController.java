@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,13 +38,26 @@ public class PlanoController {
         return plano.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-// Criar um novo plano
+    public PlanoController(PlanoService planoService) {
+        this.planoService = planoService;
+    }
+
     @PostMapping
+    public ResponseEntity<String> cadastrarPlano(@RequestBody Planos plano) {
+        try {
+            planoService.cadastrarPlano(plano);
+            return ResponseEntity.ok("Plano cadastrado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar plano: " + e.getMessage());
+        }
+    }
+
+// Criar um novo plano
+    /*@PostMapping
     public ResponseEntity<Planos> criarPlano(@RequestBody Planos plano) {
         Planos novoPlano = planoService.criarPlano(plano);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPlano);
-    }
+    }*/
 
 // Atualizar plano existente
     @PutMapping("/{id}")

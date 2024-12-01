@@ -18,15 +18,62 @@ public class Planos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "status", length = 50, nullable = true)
+    @Column(name = "status", length = 11, nullable = true)
     private String status;
-    @Column(name = "descricao", length = 50, nullable = false)
+    @Column(name = "descricao", length = 150, nullable = false)
     private String descricao;
-    @Column(name = "valormensal", length = 50, nullable = false)
-    private int valormensal;
-    @Column(name = "valoranual", length = 50, nullable = false)
-    private int valoranual;
+    @Column(name = "valormensal", nullable = false)
+    private int   valormensal;
+    @Column(name = "valoranual", nullable = false)
+    private int  valoranual;
 
     public Planos (){}
-    
+
+    public Planos(String descricao, int id, String status, int valoranual, int valormensal) {
+        this.descricao = descricao;
+        this.id = id;
+        this.status = status;
+        this.valoranual = valoranual;
+        this.valormensal = valormensal;
+    }    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getValormensal() {
+        return valormensal;
+    }
+
+    public void setValormensal(int valormensal) {
+        this.valormensal = valormensal;
+    }
+
+    public int getValoranual() {
+        return valoranual;
+    }
+
+    public void setValoranual(int valoranual) {
+        this.valoranual = valoranual;
+    }
 }
