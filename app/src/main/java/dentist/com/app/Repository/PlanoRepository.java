@@ -11,7 +11,7 @@ import dentist.com.app.Entities.Planos;
 @Repository
 public interface PlanoRepository extends JpaRepository<Planos, Integer> {
     
-    @Query(value = "SELECT * FROM planos WHERE id = (SELECT MAX(id) FROM usuarios)", nativeQuery = true)
+    @Query(value = "SELECT * FROM planos WHERE id = (SELECT MAX(id) FROM planos)", nativeQuery = true)
     Planos findUltimoPlanoCadastrado();
 
     @Procedure(procedureName = "sp_CadastrarPlano")
