@@ -23,25 +23,22 @@ import dentist.com.app.Services.PlanoService;
 public class PlanoController {
 
     @Autowired
-    private final PlanoService planoService;
+    private PlanoService planoService;
 
     @GetMapping
     public ResponseEntity<List<Planos>> listarPlanos() {
-        List<Planos> plano = planoService.listarPlanos();
+        List<Planos> plano = planoService.findAll();
         return ResponseEntity.ok().body(plano);
     }
 
 // Buscar plano por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Planos> buscarPlano(@PathVariable Integer id) {
+    public ResponseEntity<Planos> buscarPlano(@PathVariable int id) {
         Optional<Planos> plano = planoService.buscarPlanoPorId(id);
 
         return plano.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public PlanoController(PlanoService planoService) {
-        this.planoService = planoService;
-    }
 
 // Criar um novo plano
     @PostMapping
@@ -56,7 +53,7 @@ public class PlanoController {
 
 // Atualizar plano existente
     @PutMapping("/{id}")
-    public ResponseEntity<Planos> atualizarPlano(@PathVariable Integer id, @RequestBody Planos plano) {
+    public ResponseEntity<Planos> atualizarPlano(@PathVariable int id, @RequestBody Planos plano) {
         Optional<Planos> planoExistente = planoService.buscarPlanoPorId(id);
         if (planoExistente.isPresent()) {
             Planos planoAtualizado = planoService.atualizarPlano(id, plano);
@@ -68,7 +65,7 @@ public class PlanoController {
 // Deletar plano
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarPlano(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletarPlano(@PathVariable int id) {
         Optional<Planos> planoExistente = planoService.buscarPlanoPorId(id);
         if (planoExistente.isPresent()) {
             planoService.deletarPlano(id);

@@ -17,7 +17,7 @@ public class PlanoService {
     //@Autowired
     //private EntityManager entityManager;
 
-    public List<Planos> listarPlanos() {
+    public List<Planos> findAll() {
         return planoRepository.findAll();
     }
 
